@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  jcfa-app:
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.9
+    container_name: jcfa-app
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - jcfa-mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    networks:
+      - jcfa-network
+    volumes:
+      - ./app:/app
+
+  jcfa-mysql:
+    image: mysql:8.0
+    container_name: jcfa-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db_data:/var/lib/mysql
+volumes:
+  mysql_data:
+
+networks:
+  jcfa-network:
