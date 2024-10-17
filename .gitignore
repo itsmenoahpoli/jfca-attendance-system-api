@@ -2,8 +2,8 @@
 
 .env
 
-<<<<<<< HEAD
 db_data
-=======
-.mysql/
->>>>>>> 5703358 (updated docker config)
+
+__pycache__
+
+**/__pycache__
