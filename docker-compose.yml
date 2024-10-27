@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   jcfa-app:
-    image: tiangolo/uvicorn-gunicorn-fastapi:python3.9
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.12
     container_name: jcfa-app
     build:
       context: .
@@ -29,7 +29,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     ports:
-      - "27017:27017"
+      - "27017:27500"
     volumes:
       - ./db_data:/data/db
 
