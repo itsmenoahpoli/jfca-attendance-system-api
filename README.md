@@ -38,7 +38,7 @@ python -m venv .venv
 .venv/Scripts/activate
 
 # For MacOS
-source venv/bin/activate
+source .venv/bin/activate
 
 pip install -r requirements.txt
 
