@@ -27,6 +27,11 @@ You must have these installed on your machine:
 <h4>Installation and setup (Localhost)</h4>
 
 ```bash
+
+git clone https://github.com/itsmenoahpoli/jfca-attendance-system-api.git
+
+cd jfca-attendance-system-api
+
 python -m venv .venv
 
 # For windows
