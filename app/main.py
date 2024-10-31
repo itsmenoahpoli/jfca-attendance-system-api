@@ -19,10 +19,7 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
-@app.get("/app-settings", response_model=List[dict])
-async def get_app_settings(collection=Depends(lambda: db_get_collection("app_settings"))):
-  documents = collection.find()
-  return [format_document(doc) for doc in documents]
+
 
 
 @app.get('/api/healthcheck')
