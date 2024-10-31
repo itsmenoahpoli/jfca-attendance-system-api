@@ -1,6 +1,12 @@
 from pydantic_settings import BaseSettings
 
-class AppConfig(BaseSettings):
-  pass
+class AppSettings(BaseSettings):
+  app_debug: bool
+  app_secret_key: str
+  app_database_url: str
 
-DATABASE_URL = "mongodb://root:root@localhost:27017/jcfamongodb?retryWrites=true&w=majority"
+  class Config:
+    env_file = '.env'
+
+
+appSettings = AppSettings()

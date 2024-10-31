@@ -1,12 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Depends
+from typing import List
+from .database.connection import db_get_collection, db_connect
+from .database.utils import format_document
+
 
 app = FastAPI()
-allowedOrigins = [
-  'http://localhost:5173',
-  'http://127.0.0.1:5173',
-  'http://0.0.0.0:5173',
-]
+allowedOrigins = []
+
+db_connect()
 
 app.add_middleware(
   CORSMiddleware,
@@ -15,6 +18,12 @@ app.add_middleware(
   allow_methods=["*"],
   allow_headers=["*"],
 )
+
+@app.get("/app-settings", response_model=List[dict])
+async def get_app_settings(collection=Depends(lambda: db_get_collection("app_settings"))):
+  documents = collection.find()
+  return [format_document(doc) for doc in documents]
+
 
 @app.get('/api/healthcheck')
 def root():
