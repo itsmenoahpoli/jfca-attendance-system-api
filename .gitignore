@@ -3,6 +3,7 @@
 .env
 
 db_data
+.db_data
 
 # /app/__pycache__
 
