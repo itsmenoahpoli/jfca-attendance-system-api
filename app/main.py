@@ -1,15 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, Depends
-from typing import List
-from .database.connection import db_get_collection, db_connect
-from .database.utils import format_document
+from fastapi import FastAPI
+from .modules.sms.controller import smsRouter
 
 
 app = FastAPI()
 allowedOrigins = []
-
-db_connect()
 
 app.add_middleware(
   CORSMiddleware,
@@ -19,7 +15,10 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
-
+'''
+API Routes
+'''
+app.include_router(smsRouter)
 
 
 @app.get('/api/healthcheck')
