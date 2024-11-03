@@ -29,6 +29,8 @@ class SmsLib:
             path = self.__createApiUrl(params)
             response = requests.post(path)
             response.raise_for_status()
+
+            print(f"send_message= Send message to {number} success!")
             
             return True
         except requests.exceptions.RequestException as e:
