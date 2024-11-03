@@ -1,5 +1,5 @@
 from pymongo import mongo_client
-from app.config.settings import appSettings
+from src.config.settings import appSettings
 
 db_client = mongo_client.MongoClient(
   appSettings.app_database_url

@@ -1,5 +1,5 @@
 import requests, urllib
-from app.config.settings import appSettings
+from src.config.settings import appSettings
 
 class SmsLib:
     __SEMAPHORE_SENDER_NAME=appSettings.app_semaphore_sender_name

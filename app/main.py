@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
-from .modules.sms.controller import smsRouter
+from src.modules.sms.controller import smsRouter
 
 
 app = FastAPI()
