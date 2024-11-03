@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Response, status
 from pydantic import BaseModel, constr
 from typing import Annotated
-from src.libs.sms_lib import SmsLib
+from app.libs.sms_lib import SmsLib
 
 
 smsRouter = APIRouter(
