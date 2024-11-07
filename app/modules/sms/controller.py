@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Response, status
-from pydantic import BaseModel, constr
-from typing import Annotated
-from app.libs.sms_lib import SmsLib
+from fastapi import APIRouter, HTTPException, status
+from app.modules.sms.dto import SendSmsDTO
+from app.modules.sms import service as sms_service
+from app.utils.response_utils import HTTPResponse
 
 
 smsRouter = APIRouter(
@@ -9,25 +9,21 @@ smsRouter = APIRouter(
 	tags=["sms"]
 )
 
-class SendSmsPayload(BaseModel):
-	message: Annotated[str, constr(min_length=1)]
-	number: Annotated[str, constr(min_length=11)]
+
 
 @smsRouter.post('/send-sms')
-async def sendSms(payload: SendSmsPayload, response: Response):
-	message = await SmsLib.send_message('JFCA SMS Notification', '09620636535')
+def send_sms_handler(payload: SendSmsDTO):
+	message = sms_service.send_sms(payload.message, payload.number)
 
 	if message:
-		return Response(
+		return HTTPResponse(
 			status_code=status.HTTP_200_OK,
-			content={
-				message: "SMS notification sent"
+			body={
+				"message": "SMS notification sent"
 			}
 		)
-
-	return Response(
+	
+	return HTTPException(
 		status_code=status.HTTP_400_BAD_REQUEST,
-		content={
-			message: "Failed to send SMS notification"
-		}
+		detail="SMS failed to sent"
 	)

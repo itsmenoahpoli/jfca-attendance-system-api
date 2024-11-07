@@ -1,38 +1,64 @@
+import re
 import requests, urllib
-from app.config.settings import appSettings
+from app.config.settings import app_settings
 
 class SmsLib:
-    __SEMAPHORE_SENDER_NAME=appSettings.app_semaphore_sender_name
-    __SEMAPHORE_API_KEY=appSettings.app_semaphore_key
-    __SEMAPHORE_API_URL=appSettings.app_semaphore_url
+    __SEMAPHORE_SENDER_NAME=app_settings.app_semaphore_sender_name
+    __SEMAPHORE_API_KEY=app_settings.app_semaphore_key
+    __SEMAPHORE_API_URL=app_settings.app_semaphore_url
 
     def __init__(self):
         pass
 
     @classmethod
-    def __createApiUrl(self, params: tuple):
+    def __create_api_url(self, params: tuple):
         return self.__SEMAPHORE_API_URL + urllib.parse.urlencode(params)
     
     @classmethod
-    def __createParams(self, message: str, number: str):
+    def __create_params(self, message: str, phone_number: str):
         return (
                 ('apikey', self.__SEMAPHORE_API_KEY),
                 ('sendername', self.__SEMAPHORE_SENDER_NAME),
                 ('message', message),
-                ('number', number)
+                ('number', phone_number)
             )
+    
+    @classmethod
+    def __create_attendance_sms_template(self, contents: dict):
+        template = '''
+        Attendance sms
+        '''
+
+        pass
 
     @classmethod
-    def send_message(self, message: str, number: str):
-        try:
-            params = self.__createParams(message, number)
-            path = self.__createApiUrl(params)
-            response = requests.post(path)
-            response.raise_for_status()
+    def __create_otp_sms_template(self, phone_number: str):
+        template = '''
+        OTP sms
+        '''
+        pass
+    
+    @classmethod
+    def validate_phonenumber(self, phone_number: str):
+        accepted_pattern = r"^096\d{8}$"
 
-            print(f"send_message= Send message to {number} success!")
-            
+        if re.match(accepted_pattern, phone_number):
             return True
-        except requests.exceptions.RequestException as e:
-            print(f"Failed to send message: {e}") 
-            return False  
+        
+        return False
+
+
+    @classmethod
+    def send_message(self, message: str, phone_number: str):
+        params = self.__create_params(message, phone_number)
+        path = self.__create_api_url(params)
+        response = requests.post(path)
+        response.raise_for_status()
+        response_data = response.json()
+
+        print(response_data)
+
+        if response_data and type(response_data) is list and response_data[0]['message_id'] is not None:
+            return True
+        
+        return False
