@@ -6,7 +6,7 @@ from app.utils.response_utils import HTTPResponse
 
 accountsRouter = APIRouter(
 	prefix="/v1/accounts",
-	tags=["accounts"]
+	tags=["Accounts API"]
 )
 
 @accountsRouter.post('/')

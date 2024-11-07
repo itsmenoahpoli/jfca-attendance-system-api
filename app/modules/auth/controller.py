@@ -5,7 +5,7 @@ from .service import sign_jwt
 
 authRouter = APIRouter(
 	prefix="/v1/auth",
-	tags=["auth"]
+	tags=["Auth API"]
 )
 
 

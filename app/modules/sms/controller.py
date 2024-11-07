@@ -6,7 +6,7 @@ from app.utils.response_utils import HTTPResponse
 
 smsRouter = APIRouter(
 	prefix="/v1/sms",
-	tags=["sms"]
+	tags=["SMS API"]
 )
 
 
