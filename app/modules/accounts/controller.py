@@ -42,7 +42,7 @@ def update_account_handler(account_id: str, payload: AccountDTO):
     
     return HTTPResponse(
         status_code=status.HTTP_200_OK,
-        body={"message": "Account updated successfully"}
+        detail={"message": "Account updated successfully"}
     )
 
 @accountsRouter.delete('/{account_id}', status_code=status.HTTP_204_NO_CONTENT)

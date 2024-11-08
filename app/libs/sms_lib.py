@@ -40,7 +40,7 @@ class SmsLib:
     
     @classmethod
     def validate_phonenumber(self, phone_number: str):
-        accepted_pattern = r"^096\d{8}$"
+        accepted_pattern = r"^09\d{9}$"
 
         if re.match(accepted_pattern, phone_number):
             return True
